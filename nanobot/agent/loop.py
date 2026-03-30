@@ -257,6 +257,15 @@ class AgentLoop:
             def finalize_content(self, context: AgentHookContext, content: str | None) -> str | None:
                 return loop_self._strip_think(content)
 
+            async def after_iteration(self, context: AgentHookContext) -> None:
+                u = context.usage or {}
+                logger.debug(
+                    "LLM usage: prompt={} completion={} cached={}",
+                    u.get("prompt_tokens", 0),
+                    u.get("completion_tokens", 0),
+                    u.get("cached_tokens", 0),
+                )
+
         result = await self.runner.run(AgentRunSpec(
             initial_messages=initial_messages,
             tools=self.tools,

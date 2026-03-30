@@ -6,8 +6,6 @@ import asyncio
 from dataclasses import dataclass, field
 from typing import Any
 
-from loguru import logger
-
 from nanobot.agent.hook import AgentHook, AgentHookContext
 from nanobot.agent.tools.registry import ToolRegistry
 from nanobot.providers.base import LLMProvider, ToolCallRequest
@@ -62,7 +60,7 @@ class AgentRunner:
         messages = list(spec.initial_messages)
         final_content: str | None = None
         tools_used: list[str] = []
-        usage = {"prompt_tokens": 0, "completion_tokens": 0, "cached_tokens": 0}
+        usage: dict[str, int] = {}
         error: str | None = None
         stop_reason = "completed"
         tool_events: list[dict[str, str]] = []
@@ -94,27 +92,15 @@ class AgentRunner:
                 response = await self.provider.chat_with_retry(**kwargs)
 
             raw_usage = response.usage or {}
-            iter_usage = {
-                "prompt_tokens": int(raw_usage.get("prompt_tokens", 0) or 0),
-                "completion_tokens": int(raw_usage.get("completion_tokens", 0) or 0),
-            }
-            # Pass through cached_tokens if present.
+            context.response = response
+            context.usage = raw_usage
+            context.tool_calls = list(response.tool_calls)
+            # Accumulate standard fields into result usage.
+            usage["prompt_tokens"] = usage.get("prompt_tokens", 0) + int(raw_usage.get("prompt_tokens", 0) or 0)
+            usage["completion_tokens"] = usage.get("completion_tokens", 0) + int(raw_usage.get("completion_tokens", 0) or 0)
             cached = raw_usage.get("cached_tokens")
             if cached:
-                iter_usage["cached_tokens"] = int(cached)
-            usage["prompt_tokens"] += iter_usage["prompt_tokens"]
-            usage["completion_tokens"] += iter_usage["completion_tokens"]
-            if "cached_tokens" in iter_usage:
-                usage["cached_tokens"] = usage.get("cached_tokens", 0) + iter_usage["cached_tokens"]
-            context.response = response
-            context.usage = iter_usage
-            logger.debug(
-                "LLM usage: prompt={} completion={} cached={}",
-                iter_usage["prompt_tokens"],
-                iter_usage["completion_tokens"],
-                iter_usage.get("cached_tokens", 0),
-            )
-            context.tool_calls = list(response.tool_calls)
+                usage["cached_tokens"] = usage.get("cached_tokens", 0) + int(cached)
 
             if response.has_tool_calls:
                 if hook.wants_streaming():
