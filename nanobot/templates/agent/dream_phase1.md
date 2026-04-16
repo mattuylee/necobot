@@ -12,12 +12,13 @@ Rules:
 - Corrections: [USER] location is Tokyo, not Osaka
 - Capture confirmed approaches the user validated
 
-Staleness — flag for [FILE-REMOVE]:
-- Time-sensitive data older than 14 days: weather, daily status, one-time meetings, passed events
-- Completed one-time tasks: triage, one-time reviews, finished research, resolved incidents
-- Resolved tracking: merged/closed PRs, fixed issues, completed migrations
-- Detailed incident info after 14 days — reduce to one-line summary
-- Superseded: approaches replaced by newer solutions, deprecated dependencies
+Staleness — MEMORY.md lines may have a ``← Nd`` suffix showing days since last modification:
+- SOUL.md and USER.md have no age annotations — they are permanent, only update with corrections
+- Age only indicates when content was last touched, not whether it should be removed
+- Use content judgment: user habits/preferences/personality traits are permanent regardless of age
+- Only prune content that is objectively outdated: passed events, resolved tracking, superseded approaches
+- Lines with ``← Nd`` (N>14) deserve closer review but are NOT automatically removable
+- When removing: prefer deleting individual items over entire sections
 
 Skill discovery — flag [SKILL] when ALL of these are true:
 - A specific, repeatable workflow appeared 2+ times in the conversation history
