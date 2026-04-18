@@ -1,12 +1,12 @@
 [project]
-name = "nanobot-ai"
+name = "necobot-ai"
 version = "0.1.5.post1"
 description = "A lightweight personal AI assistant framework"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "nanobot contributors"}
+    {name = "necobot contributors"}
 ]
 keywords = ["ai", "agent", "chatbot"]
 classifiers = [
@@ -97,7 +97,7 @@ dev = [
 ]
 
 [project.scripts]
-nanobot = "nanobot.cli.commands:app"
+necobot = "necobot.cli.commands:app"
 
 [build-system]
 requires = ["hatchling"]
@@ -108,24 +108,24 @@ allow-direct-references = true
 
 [tool.hatch.build]
 include = [
-    "nanobot/**/*.py",
-    "nanobot/templates/**/*.md",
-    "nanobot/skills/**/*.md",
-    "nanobot/skills/**/*.sh",
+    "necobot/**/*.py",
+    "necobot/templates/**/*.md",
+    "necobot/skills/**/*.md",
+    "necobot/skills/**/*.sh",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["nanobot"]
+packages = ["necobot"]
 
 [tool.hatch.build.targets.wheel.sources]
-"nanobot" = "nanobot"
+"necobot" = "necobot"
 
 [tool.hatch.build.targets.wheel.force-include]
-"bridge" = "nanobot/bridge"
+"bridge" = "necobot/bridge"
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "nanobot/",
+    "necobot/",
     "bridge/",
     "README.md",
     "LICENSE",
@@ -144,7 +144,7 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 
 [tool.coverage.run]
-source = ["nanobot"]
+source = ["necobot"]
 omit = ["tests/*", "**/tests/*"]
 
 [tool.coverage.report]

@@ -4,11 +4,11 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from nanobot.bus.events import OutboundMessage
-from nanobot.bus.queue import MessageBus
-from nanobot.channels.base import BaseChannel
-from nanobot.channels.manager import ChannelManager
-from nanobot.config.schema import Config
+from necobot.bus.events import OutboundMessage
+from necobot.bus.queue import MessageBus
+from necobot.channels.base import BaseChannel
+from necobot.channels.manager import ChannelManager
+from necobot.config.schema import Config
 
 
 class MockChannel(BaseChannel):

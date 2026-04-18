@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 try:
-    from nanobot.channels import qq
+    from necobot.channels import qq
 
     QQ_AVAILABLE = getattr(qq, "QQ_AVAILABLE", False)
 except ImportError:
@@ -15,9 +15,9 @@ except ImportError:
 if not QQ_AVAILABLE:
     pytest.skip("QQ dependencies not installed (qq-botpy)", allow_module_level=True)
 
-from nanobot.bus.events import OutboundMessage
-from nanobot.bus.queue import MessageBus
-from nanobot.channels.qq import (
+from necobot.bus.events import OutboundMessage
+from necobot.bus.queue import MessageBus
+from necobot.channels.qq import (
     QQ_FILE_TYPE_FILE,
     QQ_FILE_TYPE_IMAGE,
     QQChannel,
