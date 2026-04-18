@@ -174,7 +174,7 @@
 **Install from source** (latest features, experimental changes may land here first; recommended for development)
 
 ```bash
-git clone https://github.com/HKUDS/nanobot.git
+git clone https://github.com/mattuylee/necobot.git
 cd necobot
 pip install -e .
 ```
@@ -2209,18 +2209,9 @@ necobot/
 
 ## 🤝 Contribute & Roadmap
 
-PRs welcome! The codebase is intentionally small and readable. 🤗
+This is a personal fork. For contributions, issues, or discussions, please head to the upstream project at [HKUDS/nanobot](https://github.com/HKUDS/nanobot).
 
-### Branching Strategy
-
-| Branch | Purpose |
-|--------|---------|
-| `main` | Stable releases — bug fixes and minor improvements |
-| `nightly` | Experimental features — new features and breaking changes |
-
-**Unsure which branch to target?** See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
-
-**Roadmap** — Pick an item and [open a PR](https://github.com/HKUDS/nanobot/pulls)!
+**Roadmap** — Pick an item and [open a PR](https://github.com/HKUDS/nanobot/pulls) upstream!
 
 - [ ] **Multi-modal** — See and hear (images, voice, video)
 - [ ] **Long-term memory** — Never forget important context
