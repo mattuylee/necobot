@@ -10,6 +10,7 @@ import string
 from collections.abc import Awaitable, Callable
 from typing import Any
 
+import httpx
 import json_repair
 
 from necobot.providers.base import LLMProvider, LLMResponse, ToolCallRequest
@@ -50,6 +51,8 @@ class AnthropicProvider(LLMProvider):
             client_kw["default_headers"] = extra_headers
         # Keep retries centralized in LLMProvider._run_with_retry to avoid retry amplification.
         client_kw["max_retries"] = 0
+        # Honour HTTP_PROXY / HTTPS_PROXY / NO_PROXY env vars (k8s mihomo proxy, etc.).
+        client_kw["http_client"] = httpx.AsyncClient(trust_env=True)
         self._client = AsyncAnthropic(**client_kw)
 
     @classmethod

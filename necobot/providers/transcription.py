@@ -23,7 +23,7 @@ class OpenAITranscriptionProvider:
             logger.error("Audio file not found: {}", file_path)
             return ""
         try:
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(trust_env=True) as client:
                 with open(path, "rb") as f:
                     files = {"file": (path.name, f), "model": (None, "whisper-1")}
                     headers = {"Authorization": f"Bearer {self.api_key}"}
@@ -68,7 +68,7 @@ class GroqTranscriptionProvider:
             return ""
 
         try:
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(trust_env=True) as client:
                 with open(path, "rb") as f:
                     files = {
                         "file": (path.name, f),

@@ -11,6 +11,7 @@ import uuid
 from collections.abc import Awaitable, Callable
 from typing import Any
 
+import httpx
 from openai import AsyncOpenAI
 
 from necobot.providers.base import LLMProvider, LLMResponse
@@ -59,6 +60,8 @@ class AzureOpenAIProvider(LLMProvider):
             base_url=base_url,
             default_headers={"x-session-affinity": uuid.uuid4().hex},
             max_retries=0,
+            # Honour HTTP_PROXY / HTTPS_PROXY / NO_PROXY env vars (k8s mihomo proxy, etc.).
+            http_client=httpx.AsyncClient(trust_env=True),
         )
 
     # ------------------------------------------------------------------

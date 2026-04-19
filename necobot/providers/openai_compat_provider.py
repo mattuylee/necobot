@@ -13,6 +13,7 @@ import uuid
 from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, Any
 
+import httpx
 import json_repair
 
 if os.environ.get("LANGFUSE_SECRET_KEY") and importlib.util.find_spec("langfuse"):
@@ -187,6 +188,8 @@ class OpenAICompatProvider(LLMProvider):
             base_url=effective_base,
             default_headers=default_headers,
             max_retries=0,
+            # Honour HTTP_PROXY / HTTPS_PROXY / NO_PROXY env vars (k8s mihomo proxy, etc.).
+            http_client=httpx.AsyncClient(trust_env=True),
         )
 
     def _setup_env(self, api_key: str, api_base: str | None) -> None:
